@@ -80,6 +80,10 @@ const NotificationItem: React.FC<{ notification: Notification }> = ({
     markAsReadHandler(notification.id);
   }
 
+  const viewUserProfile = () => {
+    navigate(`/home/user-profile/${notification.sender.id}`);
+  };
+
   const formatTime = (dateString: string) => {
     const date = new Date(dateString);
     const now = new Date();
@@ -100,6 +104,7 @@ const NotificationItem: React.FC<{ notification: Notification }> = ({
       }`}
     >
       <img
+        onClick={viewUserProfile}
         src={
           notification.sender.imageUrl !== ""
             ? `${process.env.REACT_APP_ASSET_URL}/${
@@ -108,7 +113,7 @@ const NotificationItem: React.FC<{ notification: Notification }> = ({
             : profileImg
         }
         alt="Profile"
-        className="w-10 h-10 rounded-full object-cover"
+        className="w-10 h-10 rounded-full object-cover cursor-pointer"
       />
       <div className="flex-1">
         <div className="flex justify-between items-start">

@@ -24,6 +24,8 @@ const PostPage = () => {
         top: document.body.scrollHeight,
         behavior: "smooth",
       });
+    } else {
+      window.scrollTo(0, 0); // Scroll to the top of the page
     }
   }, [focusOnComment]);
 
