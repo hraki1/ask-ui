@@ -57,7 +57,9 @@ const PostItem: React.FC<{
                 onClick={viewUserProfile}
                 src={
                   post.creator?.imageUrl !== ""
-                    ? `${process.env.REACT_APP_ASSET_URL}/${post.creator?.imageUrl ?? ""}`
+                    ? `${process.env.REACT_APP_ASSET_URL}/${
+                        post.creator?.imageUrl ?? ""
+                      }`
                     : profileImg
                 }
                 className=" cursor-pointer w-12 h-12 rounded-full object-cover  mr-2"
@@ -72,7 +74,9 @@ const PostItem: React.FC<{
               </div>
             </div>
 
-            <PostItemOptions post={post} isPostPage={false} />
+            {auth.isLoggedin && (
+              <PostItemOptions post={post} isPostPage={false} />
+            )}
           </div>
 
           <div>
