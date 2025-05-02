@@ -77,6 +77,7 @@ const NotificationItem: React.FC<{ notification: Notification }> = ({
     } else {
       navigate(`/home/post/${notification.postId}`);
     }
+    markAsReadHandler(notification.id);
   }
 
   const formatTime = (dateString: string) => {
@@ -101,7 +102,9 @@ const NotificationItem: React.FC<{ notification: Notification }> = ({
       <img
         src={
           notification.sender.imageUrl !== ""
-            ? `http://localhost:9090/${notification.sender.imageUrl ?? ""}`
+            ? `${process.env.REACT_APP_ASSET_URL}/${
+                notification.sender.imageUrl ?? ""
+              }`
             : profileImg
         }
         alt="Profile"
@@ -115,13 +118,13 @@ const NotificationItem: React.FC<{ notification: Notification }> = ({
           >
             {notification.type === "like" && (
               <p className="text-sm">
-                {notification.sender.name}
-                like your post <Heart className="w-5 h-5 inline mx-2" />
+                {`${notification.sender.name} `} like your post
+                <Heart className="w-5 h-5 inline mx-2" />
               </p>
             )}
             {notification.type === "answer" && (
               <p className="text-sm">
-                {notification.sender.name}
+                {`${notification.sender.name} `}
                 add answer to your post
                 <MessageCircleMore className="w-5 h-5 inline mx-2" />
               </p>
