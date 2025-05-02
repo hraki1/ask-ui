@@ -52,7 +52,8 @@ const authSlice = createSlice({
 
     addPost: (state, action: PayloadAction<Post>) => {
       if (!state.user || !state.user.posts) return;
-      state.user.posts = [...state.user.posts, action.payload];
+      console.log("added");
+      state.user.posts = [action.payload, ...state.user.posts];
     },
 
     // ✅ Improved updatePost
