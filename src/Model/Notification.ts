@@ -7,4 +7,5 @@ export default interface Notification {
   type: string;
   isRead: boolean;
   createdAt: string;
+  postId: string;
 }
