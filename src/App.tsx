@@ -4,6 +4,7 @@ import { Suspense } from "react";
 import "./App.css";
 import Root from "./pages/RootLayout";
 import Homelayout from "./pages/HomeLayout";
+import Profile from "./pages/ProfilePage";
 import LandingPage from "./pages/LandingPage";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./http";
@@ -12,7 +13,6 @@ import { tokenLoader } from "./util/auth";
 import { action as logoutAction } from "./pages/Logout";
 import Spinner from "./components/UI/SpinnerLoading";
 
-const Profile = React.lazy(() => import("./pages/ProfilePage"));
 const Notification = React.lazy(() => import("./pages/NotificationPage"));
 const PostPage = React.lazy(() => import("./pages/PostPage"));
 const UserProfile = React.lazy(() => import("./pages/UserProfile"));
@@ -59,11 +59,7 @@ const App: React.FC = () => {
             },
             {
               path: "profile",
-              element: (
-                <Suspense fallback={<Spinner />}>
-                  <Profile />
-                </Suspense>
-              ),
+              element: <Profile />,
             },
             {
               path: "user-profile/:id",

@@ -7,6 +7,7 @@ import { handleAuth, queryClient } from "../../http";
 import { useAppDispatch } from "../../store/hooks";
 import { authActions } from "../../store/auth";
 import Modal from "../UI/Modal";
+import Spinner from "../UI/SpinnerLoading";
 
 interface AuthFormState {
   enteredData?: {
@@ -17,6 +18,7 @@ interface AuthFormState {
 }
 
 const AuthForm: React.FC = () => {
+  const [isloadingSpinner, setIsloadingSpinner] = useState(false);
   const [modalIsOpen, setModalIsOpen] = useState(false);
   const [errorMessage, setErrorMessage] = useState<{
     statusCode: number;
@@ -29,7 +31,7 @@ const AuthForm: React.FC = () => {
   const [searchParams] = useSearchParams();
   const isLogin = searchParams.get("mode") === "login";
 
-  const { mutate, data, error, status } = useMutation({
+  const { mutate, data, error, status, isPending } = useMutation({
     mutationFn: handleAuth,
     onSuccess: (data) => {
       if (data) {
@@ -38,6 +40,7 @@ const AuthForm: React.FC = () => {
           message: data.message || "",
         });
       }
+      setIsloadingSpinner(false);
       queryClient.invalidateQueries({ queryKey: ["posts"] });
     },
   });
@@ -83,18 +86,21 @@ const AuthForm: React.FC = () => {
     const mode = isLogin ? "login" : "signup";
     // TODO: Send to backend or do something useful here
     mutate({ mode, user });
-    // dispatch(authActions.login());
 
     return {
       errors: [],
     };
   }
 
-  const [formState, formAction, isPending] = useActionState(authFormAction, {
+  const [formState, formAction] = useActionState(authFormAction, {
     errors: [],
   });
 
   const handleToggleModal = () => setModalIsOpen((prev) => !prev);
+
+  if (isloadingSpinner) {
+    <Spinner />;
+  }
 
   return (
     <>
@@ -152,6 +158,7 @@ const AuthForm: React.FC = () => {
                 Name
               </label>
               <input
+                disabled={isPending}
                 id="name"
                 type="text"
                 name="name"
@@ -166,6 +173,7 @@ const AuthForm: React.FC = () => {
               Email
             </label>
             <input
+              disabled={isPending}
               id="email"
               type="text"
               name="email"
@@ -183,6 +191,7 @@ const AuthForm: React.FC = () => {
             </label>
             <div className="relative">
               <input
+                disabled={isPending}
                 id="password"
                 type={showPassword ? "text" : "password"}
                 name="password"

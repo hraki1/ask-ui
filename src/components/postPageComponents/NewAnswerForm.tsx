@@ -79,7 +79,7 @@ const NewAnswerForm: React.FC<{ post: Post }> = ({ post }) => {
 
   return (
     <div className="bg-[#1E293B] w-full md:w-[50%] fixed bottom-0 left-1/2 -translate-x-1/2 flex items-start gap-3 px-4 py-4 rounded-t-xl shadow-xl z-50">
-      <img
+      {/* <img
         src={
           user?.imageUrl !== ""
             ? `${process.env.REACT_APP_ASSET_URL}/${user?.imageUrl ?? ""}`
@@ -87,7 +87,7 @@ const NewAnswerForm: React.FC<{ post: Post }> = ({ post }) => {
         }
         className="w-12 h-12 rounded-full object-cover"
         alt="profile"
-      />
+      /> */}
       <div className="flex-1">
         <form action={formAction}>
           <input

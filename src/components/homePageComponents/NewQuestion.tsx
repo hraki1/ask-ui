@@ -16,6 +16,7 @@ const NewQuestion: React.FC = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const auth = useAppSelector((state: RootState) => state.auth);
+  const audio = new Audio("/new-message.mp3");
 
   function handlePickImage() {
     if (auth.isLoggedin) {
@@ -33,6 +34,7 @@ const NewQuestion: React.FC = () => {
         dispatch(postActions.add(data));
         dispatch(authActions.addPost(data));
       }
+      audio.play();
     },
   });
 
