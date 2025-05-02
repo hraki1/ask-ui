@@ -62,7 +62,7 @@ const NotificationItem: React.FC<{ notification: Notification }> = ({
 
   const handlerReadAnimating = useCallback(() => {
     controls.start({
-      scale: [1, 1.03, 1],
+      scale: [1, 0.5, 0.3],
       backgroundColor: ["#1E293B", "#334155", "#0F172A"],
       transition: {
         duration: 0.6,
