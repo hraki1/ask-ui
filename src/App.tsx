@@ -3,8 +3,8 @@ import React from "react";
 import { Suspense } from "react";
 import "./App.css";
 import Root from "./pages/RootLayout";
+import Error from "./pages/Error";
 import Homelayout from "./pages/HomeLayout";
-import Profile from "./pages/ProfilePage";
 import LandingPage from "./pages/LandingPage";
 import { QueryClientProvider } from "@tanstack/react-query";
 import { queryClient } from "./http";
@@ -18,6 +18,7 @@ const PostPage = React.lazy(() => import("./pages/PostPage"));
 const UserProfile = React.lazy(() => import("./pages/UserProfile"));
 const Authentication = React.lazy(() => import("./pages/AuthPage"));
 const Home = React.lazy(() => import("./pages/HomePage"));
+const Profile = React.lazy(() => import("./pages/ProfilePage"));
 
 const App: React.FC = () => {
   const router = createBrowserRouter([
@@ -25,7 +26,7 @@ const App: React.FC = () => {
       path: "",
       element: <Root />,
       loader: tokenLoader,
-      hydrateFallbackElement: <p>Loading...</p>,
+      errorElement: <Error />,
       children: [
         { index: true, element: <LandingPage /> },
         {
@@ -59,7 +60,11 @@ const App: React.FC = () => {
             },
             {
               path: "profile",
-              element: <Profile />,
+              element: (
+                <Suspense fallback={<Spinner />}>
+                  <Profile />
+                </Suspense>
+              ),
             },
             {
               path: "user-profile/:id",
@@ -82,19 +87,16 @@ const App: React.FC = () => {
                 },
               ],
             },
-            { path: "*", element: <NotFound /> },
           ],
         },
+        { path: "*", element: <NotFound /> }, // ✅ الآن يغطي كل المسارات غير المعرفة
       ],
     },
   ]);
 
   return (
     <QueryClientProvider client={queryClient}>
-      <RouterProvider
-        router={router}
-        fallbackElement={<Spinner />}
-      ></RouterProvider>
+      <RouterProvider router={router} fallbackElement={<Spinner />} />
     </QueryClientProvider>
   );
 };
