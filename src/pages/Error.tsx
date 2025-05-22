@@ -24,7 +24,7 @@ const Error: React.FC = () => {
           <h1 className="text-5xl font-bold mb-2">404</h1>
           <p className="text-xl mb-4 text-blue-200">
             Oops! there is Error Occured Please Contact with Us and provide
-            thhis error.
+            this error.
           </p>
           <Link
             to="/home"

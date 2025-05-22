@@ -30,7 +30,6 @@ const Navigation = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, []);
 
-
   return (
     <header className="w-[100%] p-4 bg-[#1F2A40] shadow-md">
       <nav className="flex items-center justify-between">
@@ -78,49 +77,50 @@ const Navigation = () => {
               </p>
             </NavLink>
           </li>
-
-          <li className="text-blue-200 text-xl hover:text-stone-500 cursor-pointer flex items-center">
-            <NavLink
-              to="notification"
-              style={({ isActive }) => ({
-                textShadow: isActive ? "0 0 20px #3b82f6" : "none",
-              })}
-              className={({ isActive }) =>
-                `flex flex-col items-center hover:text-blue-300 ${
-                  isActive ? "text-blue-400" : ""
-                }`
-              }
-              aria-label={`Notifications: ${notificationNumber + 4} unread`}
-            >
-              <div className="relative flex flex-col items-center group cursor-pointer">
-                <div className="relative">
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    strokeWidth={1.5}
-                    stroke="currentColor"
-                    className="size-8 md:size-6 transition-transform group-hover:scale-110"
-                    aria-hidden="true"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"
-                    />
-                  </svg>
-                  {notificationNumber > 0 && (
-                    <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white animate-pulse">
-                      {notificationNumber}
-                    </span>
-                  )}
+          {auth.isLoggedin && (
+            <li className="text-blue-200 text-xl hover:text-stone-500 cursor-pointer flex items-center">
+              <NavLink
+                to="notification"
+                style={({ isActive }) => ({
+                  textShadow: isActive ? "0 0 20px #3b82f6" : "none",
+                })}
+                className={({ isActive }) =>
+                  `flex flex-col items-center hover:text-blue-300 ${
+                    isActive ? "text-blue-400" : ""
+                  }`
+                }
+                aria-label={`Notifications: ${notificationNumber + 4} unread`}
+              >
+                <div className="relative flex flex-col items-center group cursor-pointer">
+                  <div className="relative">
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      strokeWidth={1.5}
+                      stroke="currentColor"
+                      className="size-8 md:size-6 transition-transform group-hover:scale-110"
+                      aria-hidden="true"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        d="M14.857 17.082a23.848 23.848 0 0 0 5.454-1.31A8.967 8.967 0 0 1 18 9.75V9A6 6 0 0 0 6 9v.75a8.967 8.967 0 0 1-2.312 6.022c1.733.64 3.56 1.085 5.455 1.31m5.714 0a24.255 24.255 0 0 1-5.714 0m5.714 0a3 3 0 1 1-5.714 0"
+                      />
+                    </svg>
+                    {notificationNumber > 0 && (
+                      <span className="absolute -top-2 -right-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs text-white animate-pulse">
+                        {notificationNumber}
+                      </span>
+                    )}
+                  </div>
+                  <p className="mt-1 hidden text-xl text-gray-300 md:flex group-hover:text-white transition-colors">
+                    Notification
+                  </p>
                 </div>
-                <p className="mt-1 hidden text-xl text-gray-300 md:flex group-hover:text-white transition-colors">
-                  Notification
-                </p>
-              </div>
-            </NavLink>
-          </li>
+              </NavLink>
+            </li>
+          )}
 
           {!auth.isLoggedin && (
             <li>
